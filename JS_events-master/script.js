@@ -58,21 +58,42 @@ myNavBar.addEventListener('dblclick',function(){
 
 // Fonctionnalité 6
 
-viewButton = document.getElementsByClassName('btn btn-sm btn-success')[0];
-cardText = document.getElementsByClassName('card-text')[0];
-cardImage = document.getElementsByClassName('card-img-top')[0];
-contentDisplayed = true;
-viewButton.addEventListener('mouseover',function(){
-  if (contentDisplayed){
-  cardText.style.display="none";
-  cardImage.style.width="20%";
-  contentDisplayed = false;
-  } else {
-  cardText.style.display="";
-  cardImage.style.width="100%";
-  contentDisplayed = true;
-  }
-});
+let contentDisplayed=[true,true,true,true,true,true];
+
+for (let image=0; image<=5;image++){
+  viewButton = document.getElementsByClassName('btn btn-sm btn-success')[image];
+  viewButton.addEventListener('mouseover',function(){
+    cardText = document.getElementsByClassName('card-text')[image];
+    cardImage = document.getElementsByClassName('card-img-top')[image];
+    if (contentDisplayed[image]){
+    cardText.style.display="none";
+    cardImage.style.width="20%";
+    contentDisplayed[image] = false;
+    } else {
+    cardText.style.display="";
+    cardImage.style.width="100%";
+    contentDisplayed[image] = true;
+    }
+  });
+}
 
 // Fonctionnalité 7
 
+let orderButton = document.getElementsByClassName("btn btn-secondary my-2")[0];
+let elements = [];
+
+function save_positions(){
+  for (let pos=0; pos<=5;pos++){
+    elements[pos] = document.getElementsByClassName("col-md-4")[pos];
+  }
+}
+
+save_positions();
+
+orderButton.addEventListener('click',function(){
+  for (let position=1; position<=5;position++){
+  document.getElementsByClassName("col-md-4")[position] = elements[position-1];
+  }
+  document.getElementsByClassName("col-md-4")[0] = elements[5];
+  save_positions();
+});
